@@ -1,0 +1,1 @@
+static inline void check_linked_library_versions(void) {}
