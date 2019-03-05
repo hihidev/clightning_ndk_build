@@ -1,0 +1,20 @@
+dist: xenial
+os: linux
+language: minimal
+sudo: required
+services:
+  - docker
+env:
+  global:
+    - REPO=https://github.com/ElementsProject/lightning.git
+    - COMMIT=21afe1c0f403b470f5ef6f117f9e3e58d48b7935
+    - TARGETHOST=aarch64-linux-android
+    - BITS=64
+  matrix:
+    - UNUSED=true
+    - TARGETHOST=armv7a-linux-androideabi BITS=32
+    - TARGETHOST=x86_64-linux-android
+    - TARGETHOST=i686-linux-android BITS=32
+
+script:
+  - docker run -v $PWD:/repo debian:stretch /bin/bash -c "/repo/stretch_deps.sh && /repo/fetchbuild.sh $REPO $COMMIT $TARGETHOST $BITS /repo"
